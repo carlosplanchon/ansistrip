@@ -2,7 +2,7 @@
 
 from re import compile
 
-ansi_escape = compile(r"\x1B\[[0-?]*[ -/]*[@-~]")
+ansi_escape = compile(rb"(?:\x1B[@-Z\\-_]|[\x80-\x9A\x9C-\x9F]|(?:\x1B\[|\x9B)[0-?]*[ -/]*[@-~])")
 
 
 def ansi_strip(text: str) -> str:
@@ -12,4 +12,4 @@ def ansi_strip(text: str) -> str:
     :param text: str: Text.
 
     """
-    return ansi_escape.sub("", text)
+    return ansi_escape.sub(b"", text.encode()).decode()
