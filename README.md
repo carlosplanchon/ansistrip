@@ -4,7 +4,7 @@
 ## Installation
 ### Install with pip
 ```
-pip3 install -U ansistrip
+uv add ansistrip
 ```
 
 ## Usage
