@@ -8,26 +8,22 @@ version = "0.2.0"
 description = "Module to strip ANSI escape codes from strings"
 readme = "README.md"
 requires-python = ">=3.8"
-license = {text = "MIT"}
-authors = [
-    {name = "Carlos A. Planchón", email = "bubbledoloresuruguay2@gmail.com"}
-]
-keywords = ["ansi", "strip", "escape-codes", "terminal", "VT100", "color"]
+license = {file = "LICENSE"}
 classifiers = [
-    "Development Status :: 4 - Beta",
-    "Intended Audience :: Developers",
-    "Topic :: Software Development :: Libraries :: Python Modules",
-    "Topic :: Terminals",
-    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
-    "Programming Language :: Python :: 3.14",
-    "Typing :: Typed",
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Terminals",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Typing :: Typed",
 ]
 
 [project.urls]
@@ -35,13 +31,16 @@ Homepage = "https://github.com/carlosplanchon/ansistrip"
 Repository = "https://github.com/carlosplanchon/ansistrip"
 Issues = "https://github.com/carlosplanchon/ansistrip/issues"
 
+[tool.setuptools.package-data]
+ansistrip = ["py.typed"]
+
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["ansistrip*"]
 
 [tool.black]
 line-length = 88
-target-version = ["py38", "py39", "py310", "py311", "py312"]
+target-version = ["py38", "py39", "py310", "py311", "py312", "py313", "py314"]
 
 [tool.isort]
 profile = "black"
