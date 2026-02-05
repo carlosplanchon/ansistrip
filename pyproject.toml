@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ansistrip"
-version = "0.2.0"
-description = "Module to strip ANSI escape codes from strings"
+version = "0.2.1"
+description = "Mini-lib to strip ANSI escape codes from strings"
 readme = "README.md"
 requires-python = ">=3.8"
 
