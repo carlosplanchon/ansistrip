@@ -2,7 +2,7 @@
 *Mini-lib to strip ANSI Escape codes from a string.*
 
 ## Installation
-### Install with pip
+### Install with uv:
 ```
 uv add ansistrip
 ```
