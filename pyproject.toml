@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ansistrip"
-version = "0.2.3"
+version = "0.2.4"
 description = "Mini-lib to strip ANSI escape codes from strings"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 
 license = "MIT"
 license-files = ["LICENSE"]
@@ -18,8 +18,6 @@ classifiers = [
   "Topic :: Software Development :: Libraries :: Python Modules",
   "Topic :: Terminals",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
@@ -42,14 +40,14 @@ include = ["ansistrip*"]
 
 [tool.black]
 line-length = 88
-target-version = ["py38", "py39", "py310", "py311", "py312", "py313", "py314"]
+target-version = ["py310", "py311", "py312", "py313", "py314"]
 
 [tool.isort]
 profile = "black"
 line_length = 88
 
 [tool.mypy]
-python_version = "3.8"
+python_version = "3.10"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
