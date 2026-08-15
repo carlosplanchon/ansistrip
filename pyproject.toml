@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ansistrip"
-version = "0.2.4"
+version = "0.3.0"
 description = "Mini-lib to strip ANSI escape codes from strings"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -25,6 +25,9 @@ classifiers = [
   "Programming Language :: Python :: 3.14",
   "Typing :: Typed",
 ]
+
+[dependency-groups]
+dev = ["pytest>=8.0"]
 
 [project.urls]
 Homepage = "https://github.com/carlosplanchon/ansistrip"

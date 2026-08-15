@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test on Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install uv and Python ${{ matrix.python-version }}
+        uses: astral-sh/setup-uv@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+          enable-cache: true
+
+      - name: Run the test suite
+        run: uv run pytest
+
+  quality:
+    name: Format, imports and types
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install uv and Python
+        uses: astral-sh/setup-uv@v7
+        with:
+          # The oldest supported version, matching [tool.mypy] python_version.
+          python-version: "3.10"
+          enable-cache: true
+
+      - name: Check formatting with black
+        run: uv run --with black black --check --diff .
+
+      - name: Check import order with isort
+        run: uv run --with isort isort --check-only --diff .
+
+      - name: Type check with mypy
+        run: uv run --with mypy mypy ansistrip tests

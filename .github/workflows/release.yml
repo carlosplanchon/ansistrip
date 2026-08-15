@@ -1,0 +1,72 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build distributions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install uv and Python
+        uses: astral-sh/setup-uv@v7
+        with:
+          python-version: "3.12"
+          enable-cache: true
+
+      - name: Check that the tag matches the version in pyproject.toml
+        if: github.event_name == 'push'
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          version="$(uv run --no-project python -c 'import pathlib, tomllib; print(tomllib.loads(pathlib.Path("pyproject.toml").read_text())["project"]["version"])')"
+          if [ "$tag" != "$version" ]; then
+            echo "::error::tag ${GITHUB_REF_NAME} does not match project version ${version}"
+            exit 1
+          fi
+          echo "Releasing version ${version}"
+
+      - name: Run the test suite
+        run: uv run pytest
+
+      - name: Build the sdist and the wheel
+        run: uv build
+
+      - name: Check the distribution metadata
+        run: uv run --with twine twine check --strict dist/*
+
+      - name: Upload the distributions
+        uses: actions/upload-artifact@v7
+        with:
+          name: dist
+          path: dist/
+          if-no-files-found: error
+
+  publish:
+    name: Publish to PyPI
+    needs: build
+    runs-on: ubuntu-latest
+    # Declare the same environment on the PyPI publisher, and add a required
+    # reviewer to it so nothing is uploaded without an explicit approval.
+    environment:
+      name: pypi
+      url: https://pypi.org/p/ansistrip
+    permissions:
+      # Mandatory for Trusted Publishing. Scoped to this job on purpose, so the
+      # build job never sees an OIDC token.
+      id-token: write
+    steps:
+      - name: Download the distributions
+        uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist/
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
